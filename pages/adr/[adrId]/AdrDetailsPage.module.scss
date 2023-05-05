@@ -1,0 +1,27 @@
+.cardContent {
+  background: #ddc4d7;
+  font-size: 20px;
+
+  .adrTable {
+    display: inline-block;
+    position: relative;
+
+    .adrTableNo {
+      width: 100%;
+      font-size: 80px;
+      position: absolute;
+      &:first-of-type {
+        top: 5px;
+      }
+      &:last-of-type {
+        bottom: 10px;
+      }
+    }
+  }
+
+  .description {
+    @media (max-width: 600px) {
+      text-align: center;
+    }
+  }
+}
