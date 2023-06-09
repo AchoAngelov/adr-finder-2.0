@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
 import SearchBar from '../components/SearchBar'
+import { fetchAdrData } from '../services/adrService'
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('')
+  const [loading, setLoading] = useState(false)
   const [adrData, setAdrData] = useState([])
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('/api/adrs', {
-        params: { search: searchValue },
-      })
-      const data = response.data
-      setAdrData(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   useEffect(() => {
-    if (searchValue === '') {
-      setAdrData([])
-      return
+    setLoading(true)
+    const fetchDataAndSetData = async () => {
+      if (searchValue.length === '') {
+        setAdrData([])
+        return
+      }
+      const data = await fetchAdrData(searchValue)
+      setAdrData(data)
+      setLoading(false)
     }
-    fetchData()
+
+    fetchDataAndSetData()
   }, [searchValue])
 
   return (
